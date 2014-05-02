@@ -1,0 +1,96 @@
+/*
+* Author: Patricia Reyes
+* NOTE: Program reads INPUT from file
+*/
+import java.io.*;
+import java.util.*;
+import java.util.Arrays;
+
+class Case{
+  private int Size;
+  private int[] Numbers;
+  
+  public Case(int size, int[] numbers){
+    this.Size = size;
+    this.Numbers = numbers;
+  }
+}
+
+public class ProblemB {
+
+  public static void main(String Args[]){
+    String namefile;
+    int[] numbers;
+    int elements = 0;
+    int total = 0;
+    int test = 0;
+    int cases = 0;
+    
+    // GET INPUT FROM A FILE
+    if (Args.length > 1 ) namefile = Args[0];
+    else namefile = "testB.txt";
+    
+    // Open file
+    try{
+      BufferedReader in = new BufferedReader( new FileReader(namefile) );
+      String s;
+      String[] tok;
+            
+      // Read number of cases
+      try{
+        if( (s = in.readLine()) != null ){
+          tok = s.split("\\b\\s");
+          cases = Integer.parseInt(tok[0].trim());
+        }
+      }
+      catch(IOException e){
+        e.printStackTrace();
+      }
+      
+      // Test cases
+      for (int i = 0; i < cases; i++){
+        
+        // Get total of elements
+        try{
+          if( (s = in.readLine()) != null ){
+            tok = s.split("\\b\\s");
+            elements = Integer.parseInt(tok[0].trim());
+            
+            if (elements > 0) total = 1;
+            else total = 0;
+          }
+        }
+        catch(IOException e){
+          e.printStackTrace();
+        }
+        
+        // Get elements
+        try{
+          if( (s = in.readLine()) != null ){
+            tok = s.split("\\b\\s");
+            numbers = new int[elements];
+            for (int j = 0; j < elements; j++){
+              numbers[j] = (new Integer(tok[j].trim())).intValue();
+            }
+            
+            // Count groups
+            test = numbers[0];
+            for (int j = 1; j < elements; j++){
+              if ( test > numbers[j] ){
+                total++;
+              }
+            }
+            // Print total of groups in this case.
+            System.out.println(total);
+          }
+        }
+        catch(IOException e){
+          e.printStackTrace();
+        }
+      }
+    }  
+    catch(FileNotFoundException fnfe){
+      System.out.println(fnfe.getMessage());
+    }
+  }
+}
